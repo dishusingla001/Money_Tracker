@@ -1,0 +1,212 @@
+/* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: rgb(0, 0, 0);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    height: 100vh;
+    width: 100vw;
+    max-width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Container styling */
+.container {
+    width: 100%;
+    max-width: 1200px;
+    padding: 0 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Form Box styling */
+.form-box {
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 20px;
+    padding: 3rem;
+    width: 100%;
+    max-width: 450px;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    animation: fadeIn 0.8s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.form-box h2 {
+    text-align: center;
+    color: orange;
+    font-size: 2.2rem;
+    margin-bottom: 2rem;
+    letter-spacing: 1px;
+    position: relative;
+    padding-bottom: 10px;
+}
+
+.form-box h2::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    width: 50px;
+    height: 3px;
+    background: orange;
+    transform: translateX(-50%);
+}
+
+/* Input styling with icons */
+.input-group {
+    margin-bottom: 1.5rem;
+    position: relative;
+    display: flex;
+    align-items: center;
+    background-color: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.input-group:focus-within {
+    border-color: orange;
+    box-shadow: 0 0 10px rgba(255, 165, 0, 0.3);
+}
+
+.input-group i {
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 1.2rem;
+    padding: 0 15px;
+    display: flex;
+    align-items: center;
+    transition: color 0.3s ease;
+}
+
+.input-group:focus-within i {
+    color: orange;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 15px 15px 15px 15px;
+    border: none;
+    background-color: transparent;
+    color: #fff;
+    font-size: 1rem;
+    display: flex;
+    justify-content: space-between;
+}
+
+.input-group input:focus {
+    outline: none;
+}
+
+.input-group input::placeholder {
+    color: rgba(255, 255, 255, 0.6);
+    margin: 1.2rem;
+}
+
+/* Button styling */
+.submit-btn {
+    width: 100%;
+    padding: 14px;
+    background-color: #212121;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 1rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.submit-btn:hover {
+    background: orange;
+    color: black;
+}
+
+.submit-btn:active {
+    transform: scale(0.98);
+}
+
+/* Switch page text */
+.switch-page {
+    margin-top: 1.5rem;
+    text-align: center;
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 0.9rem;
+}
+
+.switch-page a {
+    color: orange;
+    text-decoration: none;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.switch-page a::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    height: 2px;
+    width: 0;
+    background-color: orange;
+    transition: width 0.3s ease;
+}
+
+.switch-page a:hover {
+    color: #ffb347;
+}
+
+.switch-page a:hover::after {
+    width: 100%;
+}
+
+/* Responsive styling */
+@media (max-width: 768px) {
+    .form-box {
+        padding: 2rem;
+        max-width: 90%;
+    }
+    
+    .form-box h2 {
+        font-size: 1.8rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .form-box {
+        padding: 1.5rem;
+    }
+    
+    .input-group {
+        padding: 0;
+    }
+    
+    .input-group i {
+        padding: 0 10px;
+    }
+    
+    .input-group input {
+        padding: 12px 12px 12px 0;
+    }
+    
+    .submit-btn {
+        padding: 12px;
+    }
+}

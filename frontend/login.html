@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="icon" type="image/png" href="Moneynew_logo-removebg-preview.png">
+    <link rel="stylesheet" href="login.css">
+</head>
+<body>
+    <div class="container">
+        <div class="form-box">
+            <h2>Login</h2>
+            <form>
+                <div class="input-group">
+                    <input type="email" placeholder="Email" required>
+
+                    <i class="fas fa-envelope"></i>
+                </div>
+                <div class="input-group">
+                    <input type="password" placeholder="Password" required>
+                    
+                    <i class="fa-solid fa-lock"></i>
+                </div>
+                <button type="submit" class="submit-btn">Login</button>
+                <p class="switch-page">Don't have an account? <a href="signup.html">Sign Up</a></p>
+
+                <script src="https://kit.fontawesome.com/d077a0e0a8.js"></script>
+            </form>
+        </div>
+    </div>
+</body>
+<script>
+    document.getElementById('loginForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        // Get form values
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
+        
+        // In a real application, you would validate these credentials with a server
+        // For this demo, we'll just store the login state
+        localStorage.setItem('isLoggedIn', 'true');
+        localStorage.setItem('userEmail', email);
+        
+        // Redirect to home page after login
+        window.location.href = 'Home.html';
+    });
+</script>
+</html>
