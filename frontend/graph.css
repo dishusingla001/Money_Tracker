@@ -1,0 +1,264 @@
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  /* font-family: Arial, sans-serif; */
+}
+body{
+  background-color: rgb(0, 0, 0);
+  font-family: sans-serif;
+  height: 100vh;
+  width: 100vw;
+  max-width: 100%;
+  font-family: cursive;
+}
+ /* css for the header body  */
+ .header-body{
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana;
+  display: flex;
+  justify-content: space-between;
+  height: 4.5rem;
+  background-color: black;
+  border: 1px solid rgba(255,255, 255, 0.2);
+  overflow: hidden;
+}
+
+.logo-info{
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+
+}
+
+.logo-info img{
+  height: 60px;
+  width: 60px;
+  margin-top:6px ;
+}
+
+.logo-info h1{
+  font-size: 1.3rem;
+  display: inline-block;
+  color: white;
+}
+
+#logo-title{
+  margin: .2rem;
+  padding: .2rem;
+}
+
+.nav-bar-list li{
+  list-style: none;
+  display: inline-block;
+  padding: 26px;
+}
+
+.nav-bar-list li:hover {
+  background-color: white;
+}
+
+.nav-bar-list li:hover a {
+  text-decoration: none;
+  color: black;
+}
+
+.login-button {
+  height: 2.5rem;
+  width: 7rem;
+  /* width: 4rem; */
+  margin: 16px;
+  margin-right: 50px;
+  --hover-shadows: 16px 16px 33px #121212, -16px -16px 33px #303030;
+  --accent: rgb(198, 215, 218);
+  font-weight: bold;
+  border-radius: 1.1em;
+  background-color: #212121;
+  cursor: pointer;
+  color: white;
+  padding: 0.5rem 1.2rem;
+  text-align: center;
+  text-decoration: none;
+}
+    
+.login-button a{
+  text-decoration: none;
+  color: white;
+}
+
+.login-button:hover {
+  background: #F6F9FE;
+}
+
+.login-button:hover a{
+  color: black;
+}
+
+
+.nav-bar-list li a{
+  text-decoration: none;
+  color: white;
+}
+
+.login-button,.nav-bar-list li {
+  white-space: nowrap;
+}
+
+.toggle{
+  /* height: 4.5rem; */
+  width: 100%;
+  padding: 10px 20px;
+  background-color: black;
+  text-align: right;
+  box-sizing: border-box;
+  color: white;
+  /* font: 30px; */
+  font-size: 30px;
+  display: none;
+  /* border: 1px solid rgba(255,255, 255, 0.2); */
+}
+
+/* ṛesponsive for the header file  */
+@media (max-width:940px){
+  .toggle{
+      display: block;
+  }
+  .nav-bar-list{
+      width: 100%;
+      display: none;
+  }
+  .nav-bar-list li {
+      display: block ;
+      text-align: center;
+  }
+  .active{
+      display: block;
+  }
+}
+
+/* css for he header info and name */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+  margin: 1.5rem;
+}
+
+.dashboard-title {
+  font-size: 24px;
+  font-weight: bold;
+  color: white;
+}
+
+.user-info {
+  /* font-family: Arial, sans-serif; */
+  font-size: 18px;
+  color: white;
+}
+
+/*  */
+
+.stats-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 30px;
+  /* width: 70%; */
+  /* margin: 4rem; */
+  padding: 1.2rem;
+  /* margin: 1.2rem; */
+}
+
+.stat-card {
+  background-color: #1e1e1e;
+  border-radius: 10px;
+  padding: 20px;
+  flex: 1;
+  width: 70%;
+  align-self: center;
+}
+
+.stat-title {
+  color: orange;
+  margin-bottom: 15px;
+  font-size: 18px;
+}
+
+.stat-value {
+  color: white;
+  font-size: 36px;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.stat-change {
+  font-size: 14px;
+  color: white;
+}
+
+/* css  */
+
+.increase {
+  color: #ff5252;
+}
+
+.decrease {
+  color: #4caf50;
+}
+
+.chart-section {
+  /* margin-top: 30px; */
+  /* margin: 2.3rem; */
+  /* margin-bottom: 1.5rem; */
+  padding: 2.5rem;
+}
+
+.chart-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.chart-title {
+  font-size: 22px;
+  color: #f0a500;
+}
+
+.chart-container {
+  background-color: #1e1e1e;
+  border-radius: 10px;
+  padding: 20px;
+  height: 400px;
+  margin-bottom: 30px;
+}
+
+select {
+  background-color: #ffffff;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 5px;
+  font-size: 14px;
+}
+
+.tab-container {
+  display: flex;
+  margin-bottom: 20px;
+}
+
+.tab {
+  padding: 10px 20px;
+  background-color: #333;
+  cursor: pointer;
+  color: white;
+  border-radius: 5px 5px 0 0;
+  margin-right: 5px;
+  font-size: 16px;
+}
+
+.tab.active {
+  background-color: #1e1e1e;
+  font-weight: bold;
+}
+
