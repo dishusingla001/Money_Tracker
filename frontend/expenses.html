@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Expenses</title>
+    <link rel="icon" type="image/png" href="android-chrome-512x512.png">
+    <link rel="stylesheet" href="expenses.css">
+</head>
+<body>
+
+    <div class="header-body">
+        <div class="logo-info">
+            <img src="Moneynew_logo-removebg-preview.png" alt="Logo">
+        
+            <div id="logo-title">
+                <h1>Money</h1>
+                <br>
+                <h1>Minder</h1>
+            </div>               
+            
+        </div>
+
+        <div class="nav-bar">
+            <nav>
+                <div class="toggle">
+                    <div class="icon"> <i class="fa-solid fa-bars"></i></div>
+                </div> 
+
+                <ul class="nav-bar-list">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="graph.html">Account</a></li>
+                    <li><a href="expenses.html">Expenses</a></li>
+                    <li><a href="help.html">Help</a></li>
+                </ul>
+            </nav>
+        </div>
+
+        <div class="login-button">
+            <a href="login.html">Login</a>
+        </div>
+
+    </div>
+
+    <div id="expense-box">
+        <div class="container">
+            <h2>Enter your Expenses</h2>
+            <form id="expense-form">
+                <label for="amount">Amount:</label>
+                <input type="number" id="amount" name="amount" placeholder="Enter amount" required>
+        
+                <label for="date">Date:</label>
+                <input type="date" id="date" name="date" required>
+        
+                <label for="category">Category:</label>
+                <select id="category" name="category" required>
+                    <option value="groceries">Groceries</option>
+                    <option value="transport">Transport</option>
+                    <option value="entertainment">Entertainment</option>
+                    <option value="bills">Bills</option>
+                    <option value="others">Others</option>
+                </select>
+        
+                <button type="submit">Add Expense</button>
+            </form>
+        </div>
+    </div>
+    
+    
+    <footer>
+        <div class="footer-container">
+          <div class="footer-columns">
+      
+            <!-- Column 1: Brand Info -->
+            <div class="footer-brand">
+              <img src="Moneynew_logo-removebg-preview.png"logo" />
+              <h2>Money Minder</h2>
+              <p class="tagline">Smart money management leads to a wealthier tomorrow.</p>
+            </div>
+      
+            <!-- Column 2: Navigation Links -->
+            <div class="footer-links">
+              <h3>Navigation</h3>
+              <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="graph.html">My Account</a></li>
+                <li><a href="expenses.html"> Expenses</a></li>
+                <li><a href="help.html">Help</a></li>
+              </ul>
+            </div>
+      
+            <!-- Column 3: Support Links -->
+            <div class="footer-support">
+              <h3>Support</h3>
+              <ul>
+                <li><a href="mailto:moneyminder29@gmail.com">Email Us</a></li>
+              </ul>
+            </div>
+      
+          </div>
+        </div>
+      
+        <!-- Bottom Bar -->
+        <div class="footer-bottom">
+          <p>&copy; 2025 Money Minder, All Rights Reserved</p>
+          <p>Terms & Conditions</p>
+        </div>
+    </footer>
+    
+    <script>
+      const form = document.getElementById('expense-form');
+      form.addEventListener('submit', async (e) => {
+          e.preventDefault();
+  
+          const amount = document.getElementById('amount').value;
+          const date = document.getElementById('date').value;
+          const category = document.getElementById('category').value;
+  
+          const userEmail = localStorage.getItem('userEmail');
+
+          const response = await fetch('https://expense-tracker-delta-ruddy-29.vercel.app/add-expense', {
+              method: 'POST',
+              headers: {
+                  'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({ amount, date, category, userEmail })
+          });
+
+  
+          const message = await response.text();
+          alert(message);
+          form.reset();
+      });
+  </script>
+  
+  <script>
+    // ✅ Redirect if not logged in
+    document.addEventListener('DOMContentLoaded', () => {
+        const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+        if (!isLoggedIn) {
+            alert('You must be logged in to access this page.');
+            window.location.href = 'login.html'; // redirect to login
+        }
+  
+        // 🔄 Optional: Show Logout in the header
+        const loginBtnDiv = document.querySelector('.login-button');
+        if (loginBtnDiv) {
+            loginBtnDiv.innerHTML = `<a href="#" onclick="logout()">Logout</a>`;
+        }
+    });
+  
+    function logout() {
+        localStorage.removeItem('isLoggedIn');
+        localStorage.removeItem('userEmail');
+        window.location.href = 'login.html';
+    }
+  </script>
+  
+</body>
+</html>
