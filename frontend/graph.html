@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Account</title>
+  <link rel="icon" type="image/png" href="android-chrome-512x512.png">
+  <link rel="stylesheet" href="graph.css">
+  <script src="https://kit.fontawesome.com/d077a0e0a8.js" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+
+
+
+</head>
+<body>
+  <div class="header-body">
+    <div class="logo-info">
+        <img src="Moneynew_logo-removebg-preview.png" alt="Logo">
+    
+        <div id="logo-title">
+            <h1>Money</h1>
+            <br>
+            <h1>Minder</h1>
+        </div>               
+        
+    </div>
+
+    <div class="nav-bar">
+        <nav>
+            <div class="toggle">
+                <div class="icon"> <i class="fa-solid fa-bars"></i></div>
+            </div> 
+
+            <ul class="nav-bar-list">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="graph.html">Account</a></li>
+                <li><a href="expenses.html">Expenses</a></li>
+                <li><a href="help.html">Help</a></li>
+            </ul>
+        </nav>
+    </div>
+
+    <div class="login-button" id="auth-button">
+        <a href="login.html">Login</a>
+    </div>
+
+</div>
+    <div class="header">
+      <div class="dashboard-title">Financial Dashboard</div>
+      <div class="user-info">Welcome back</div>
+    </div>
+
+    <div class="stats-container">
+      <div class="stat-card">
+        <div class="stat-title">Total Spent (All Time)</div>
+
+        <div class="stat-value" id="allTimeSpent">$0.00</div>
+        <div class="stat-change">Lifetime spending</div>
+    </div>
+    
+    <div class="stat-card">
+      <div class="stat-title">Last Entry</div>
+      <div class="stat-value">$0.00</div>
+      <div class="stat-change">Date</div>
+    </div>
+    
+  </div>
+
+  
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+    const loginBtnDiv = document.getElementById('auth-button');
+
+    if (isLoggedIn) {
+      const email = localStorage.getItem('userEmail') || 'User';
+      loginBtnDiv.innerHTML = `<a href="#" onclick="logout()">Logout</a>`;
+    } else {
+      loginBtnDiv.innerHTML = `<a href="login.html">Login</a>`;
+    }
+
+    // Block direct access to dashboard if not logged in
+    if (!isLoggedIn) {
+      alert('You must be logged in to view the dashboard.');
+      window.location.href = 'login.html';
+    }
+
+    // Protect expenses link
+    const expensesLink = document.querySelector('a[href="expenses.html"]');
+    if (expensesLink) {
+      expensesLink.addEventListener('click', function (e) {
+        if (!isLoggedIn) {
+          e.preventDefault();
+          alert("You must be logged in to access expenses.");
+          window.location.href = "login.html";
+        }
+      });
+    }
+  });
+
+  function logout() {
+    localStorage.removeItem('isLoggedIn');
+    localStorage.removeItem('userEmail');
+    window.location.href = 'index.html';
+  }
+</script>
+
+
+<script>
+ 
+  // Fetch stats from backend and update the stats container
+// Fetch stats from backend using userEmail
+const userEmail = localStorage.getItem('userEmail');
+
+fetch(`https://expense-tracker-delta-ruddy-29.vercel.app/api/stats?userEmail=${encodeURIComponent(userEmail)}`)
+  .then(res => res.json())
+  .then(data => {
+    document.querySelector('.stat-value').textContent = `$${data.totalSpent}`;
+    document.querySelector('.stat-change').textContent = `$${data.remaining} remaining`;
+    document.querySelectorAll('.stat-value')[1].textContent = `${data.percentUsed}%`;
+  })
+  .catch(err => {
+    console.error("Failed to load stats:", err);
+  });
+
+
+// 👇 Fetch all-time spent from backend
+fetch(`https://expense-tracker-delta-ruddy-29.vercel.app/api/total-spent?userEmail=${encodeURIComponent(userEmail)}`)
+  .then(res => res.json())
+  .then(data => {
+    document.getElementById('allTimeSpent').textContent = `$${data.totalSpent}`;
+  })
+  .catch(err => {
+    console.error("Error loading all-time spending:", err);
+  });
+
+
+
+// Get all stat cards
+const statCards = document.querySelectorAll('.stat-card');
+
+statCards.forEach(card => {
+  const title = card.querySelector('.stat-title');
+  if (title && title.textContent.includes('Last Entry')) {
+    fetch(`https://expense-tracker-delta-ruddy-29.vercel.app/api/last-expense?userEmail=${encodeURIComponent(userEmail)}`)
+      .then(res => res.json())
+      .then(data => {
+        const valueElem = card.querySelector('.stat-value');
+        const dateElem = card.querySelector('.stat-change');
+        valueElem.textContent = `$${data.amount}`;
+        dateElem.textContent = data.date;
+      })
+      .catch(err => {
+        console.error("Error loading last expense entry:", err);
+      });
+  }
+});
+
+// Check what email is being sent
+const UserEmail = localStorage.getItem('userEmail');
+console.log("Sending email:", UserEmail);
+
+
+
+
+
+
+fetch('https://expense-tracker-delta-ruddy-29.vercel.app/api/last-6-days?userEmail=test@example.com')
+  .then(response => response.json())
+  .then(data => {
+    console.log("📊 Data received from API:", data);
+
+    // Format the day to 'YYYY-MM-DD'
+    const labels = data.map(entry =>
+  new Date(entry.day).toLocaleDateString('en-GB', {
+    day: 'numeric', month: 'short'
+  })
+);
+
+    const values = data.map(entry => parseFloat(entry.total));
+
+    const ctx = document.getElementById('myChart').getContext('2d');
+    new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: labels,
+        datasets: [{
+          label: 'Expenses Over Last 6 Days',
+          data: values,
+          backgroundColor: 'rgba(54, 162, 235, 0.6)',
+          borderColor: 'rgba(54, 162, 235, 1)',
+          borderWidth: 1
+        }]
+      },
+      options: {
+        responsive: true,
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        }
+      }
+    });
+  })
+  .catch(err => {
+    console.error("❌ Error fetching data:", err);
+  });
+
+
+
+
+
+
+
+
+  document.addEventListener('DOMContentLoaded', () => {
+  // Authentication check
+  const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+  const loginBtnDiv = document.getElementById('auth-button');
+  const userEmail = localStorage.getItem('userEmail');
+
+  if (!isLoggedIn || !userEmail) {
+    alert('Please login first');
+    window.location.href = 'login.html';
+    return;
+  }
+
+  loginBtnDiv.innerHTML = `<a href="#" onclick="logout()">Logout</a>`;
+
+  // Load all data
+  Promise.all([
+    fetch(`https://expense-tracker-delta-ruddy-29.vercel.app/api/stats?userEmail=${encodeURIComponent(userEmail)}`),
+    fetch(`https://expense-tracker-delta-ruddy-29.vercel.app/api/total-spent?userEmail=${encodeURIComponent(userEmail)}`),
+    fetch(`https://expense-tracker-delta-ruddy-29.vercel.app/api/last-expense?userEmail=${encodeURIComponent(userEmail)}`),
+    fetch(`https://expense-tracker-delta-ruddy-29.vercel.app/api/last-6-days?userEmail=${encodeURIComponent(userEmail)}`)
+  ])
+  .then(async ([statsRes, totalRes, lastRes, daysRes]) => {
+    // Check all responses
+    if (!statsRes.ok || !totalRes.ok || !lastRes.ok || !daysRes.ok) {
+      throw new Error('Failed to fetch data');
+    }
+
+    const [stats, total, last, days] = await Promise.all([
+      statsRes.json(),
+      totalRes.json(),
+      lastRes.json(),
+      daysRes.json()
+    ]);
+
+    console.log('All data loaded:', {stats, total, last, days});
+
+    // Update stats cards
+    document.querySelector('.stat-value').textContent = `$${stats.totalSpent}`;
+    document.querySelector('.stat-change').textContent = `$${stats.remaining} remaining`;
+    document.querySelectorAll('.stat-value')[1].textContent = `${stats.percentUsed}%`;
+    document.getElementById('allTimeSpent').textContent = `$${total.totalSpent}`;
+
+    // Update last entry
+    const lastEntryCard = document.querySelector('.stat-card:nth-child(2)');
+    lastEntryCard.querySelector('.stat-value').textContent = `$${last.amount}`;
+    lastEntryCard.querySelector('.stat-change').textContent = last.date;
+
+    // Process and render chart data
+    renderLast6DaysChart(days);
+  })
+  .catch(err => {
+    console.error('Error loading data:', err);
+    // alert('Failed to load dashboard data');
+  });
+
+  function renderLast6DaysChart(data) {
+    console.log('Chart data:', data);
+    
+    // Generate labels for last 6 days
+    const labels = [];
+    const today = new Date();
+    for (let i = 5; i >= 0; i--) {
+      const date = new Date(today);
+      date.setDate(date.getDate() - i);
+      labels.push(date.toISOString().split('T')[0]);
+    }
+
+    // Create data map for easy lookup
+    const dataMap = {};
+    data.forEach(item => {
+      dataMap[item.day] = Number(item.total);
+    });
+
+    // Create values array
+    const values = labels.map(date => dataMap[date] || 0);
+
+    // Get canvas context
+    const ctx = document.getElementById('last6DaysChart').getContext('2d');
+
+    // Destroy previous chart if exists
+    if (window.last6DaysChart) {
+      window.last6DaysChart.destroy();
+    }
+
+    // Create new chart
+    window.last6DaysChart = new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: labels,
+        datasets: [{
+          label: 'Daily Spending',
+          data: values,
+          backgroundColor: '#3a86ff',
+          borderColor: '#3a86ff',
+          borderWidth: 1,
+          borderRadius: 4
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: {
+            display: false
+          },
+          tooltip: {
+            callbacks: {
+              label: (context) => `$${context.raw.toFixed(2)}`
+            }
+          }
+        },
+        scales: {
+          y: {
+            beginAtZero: true,
+            ticks: {
+              callback: (value) => `$${value}`
+            },
+            grid: {
+              color: 'rgba(255, 255, 255, 0.1)'
+            }
+          },
+          x: {
+            grid: {
+              display: false
+            }
+          }
+        }
+      }
+    });
+  }
+
+  function logout() {
+    localStorage.removeItem('isLoggedIn');
+    localStorage.removeItem('userEmail');
+    window.location.href = 'Home.html';
+  }
+});
+
+</script>
+
+
+</body>
+</html>
