@@ -1,1 +1,5 @@
 welcome.yml
+.env
+.vscode
+node_modules
+backend/ca.pem
