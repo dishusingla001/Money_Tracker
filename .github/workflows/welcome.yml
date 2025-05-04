@@ -1,0 +1,10 @@
+server:
+  port:19740
+  host:mysql001-singladishu815.k.aivencloud.com
+database:
+  type:defaultdb
+  username:avnadmingit 
+  connection:
+    host:mysql001-singladishu815.k.aivencloud.com
+    port:19740
+    database:mysql
