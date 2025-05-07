@@ -10,7 +10,7 @@ const user_db = mysql.createConnection({
     // Add these configuration options:
     insecureAuth: true,
     flags: '-FOUND_ROWS',
-    // Set SQL mode to disable ONLY_FULL_GROUP_BY
+    
     initSql: "SET SESSION sql_mode='STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION'"
 });
 
@@ -19,7 +19,7 @@ user_db.connect((err) => {
         console.error('Error connecting to MySQL:', err);
         process.exit(1); // Exit the process if connection fails
     }
-    console.log('✅ Connected to Aiven MySQL!');
+    console.log('✅ Connected to Online Aiven MySQL!');
     
     // Verify SQL mode is set correctly
     user_db.query("SELECT @@sql_mode", (err, results) => {
