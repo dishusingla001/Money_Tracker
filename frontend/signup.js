@@ -21,7 +21,7 @@ document.getElementById('signupForm').addEventListener('submit', async function 
 
   try {
       const response = await fetch('/signup', {
-          method: 'POST',
+          method: 'Get',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ username, email, password }),
       });
