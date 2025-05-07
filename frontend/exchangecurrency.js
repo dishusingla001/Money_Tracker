@@ -13,7 +13,7 @@ function convertCurrency() {
     fetch(API_URL)
         .then(response => response.json())
         .then(data => {
-            if (data.result === "Success") {
+            if (data.result === "success") {
                 const exchangeRate = data.conversion_rates.USD;
                 const usdAmount = inrAmount / 84.50;
                 document.getElementById('usd').textContent = usdAmount.toFixed(2);
