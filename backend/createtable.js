@@ -18,7 +18,7 @@ const createTableQuery = `
     id INT AUTO_INCREMENT PRIMARY KEY,
     fullname VARCHAR(100) NOT NULL,
     email VARCHAR(100) UNIQUE NOT NULL,
-    password VARCHAR(90) NOT NULL
+    password VARCHAR(100) NOT NULL
   );
 `;
 
