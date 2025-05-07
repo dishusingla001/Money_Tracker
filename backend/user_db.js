@@ -24,7 +24,7 @@ user_db.connect((err) => {
     // Verify SQL mode is set correctly
     user_db.query("SELECT @@sql_mode", (err, results) => {
         if (err) {
-            console.error('Error checking SQL mode:', err);
+            console.error('Error checking SQL Mode:', err);
             return;
         }
         console.log('Current SQL Status:', results[0]['@@sql_mode']);
