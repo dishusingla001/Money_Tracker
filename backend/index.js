@@ -9,7 +9,7 @@ const bcrypt = require('bcrypt'); // ✅ Add bcrypt
 
 const app = express();
 const PORT = 3000;
-const saltRounds = 10;
+const saltRounds = 11;
 
 // Middleware
 app.use(cors());
