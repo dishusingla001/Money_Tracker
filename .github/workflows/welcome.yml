@@ -1,10 +1,8 @@
-server:
-  port:19740
-  host:mysql001-singladishu815.k.aivencloud.com
-database:
-  type:defaultdb
-  username:avnadmingit 
-  connection:
-    host:mysql001-singladishu815.k.aivencloud.com
-    port:19740
-    database:mysql
+name: hello-world
+on: push
+jobs:
+  my-job:
+    runs-on: ubuntu-latest
+    steps:
+      - name: my-step
+        run: echo "Hello World!"
