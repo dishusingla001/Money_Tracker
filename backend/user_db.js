@@ -27,7 +27,7 @@ user_db.connect((err) => {
             console.error('Error checking SQL mode:', err);
             return;
         }
-        console.log('Current SQL mode:', results[0]['@@sql_mode']);
+        console.log('Current SQL Status:', results[0]['@@sql_mode']);
     });
 });
 
