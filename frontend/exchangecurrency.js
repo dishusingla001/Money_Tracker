@@ -15,12 +15,12 @@ function convertCurrency() {
         .then(data => {
             if (data.result === "success") {
                 const exchangeRate = data.conversion_rates.USD;
-                const usdAmount = inrAmount / 84.48;
+                const usdAmount = inrAmount / 84.50;
                 document.getElementById('usd').textContent = usdAmount.toFixed(2);
             }
             if (data.result === "success") {
                 const exchangeRate = data.conversion_rates.EUR;
-                const euroAmount = inrAmount / 91
+                const euroAmount = inrAmount / 92
                 document.getElementById('euro').textContent = euroAmount.toFixed(2);
             }
              else {
