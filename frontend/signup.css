@@ -22,7 +22,7 @@ body {
 .container {
   width: 100%;
   max-width: 1200px;
-  padding: 0 2rem;
+  padding: 0 2.1rem;
   display: flex;
   justify-content: center;
   align-items: center;
